@@ -36,6 +36,8 @@
 #  define T_OPT  41 /* EDNS0 option (meta-RR) */
 #endif
 
+#include <stdio.h>
+
 /* Header format, from RFC 1035:
  *                                  1  1  1  1  1  1
  *    0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
@@ -138,6 +140,7 @@ int ares_create_query(const char *name, int dnsclass, int type,
   while (*name)
     {
       if (*name == '.') {
+        printf("DEBUG: (*name == '.') == true\n");
         ares_free (buf);
         return ARES_EBADNAME;
       }
@@ -150,7 +153,9 @@ int ares_create_query(const char *name, int dnsclass, int type,
             p++;
           len++;
         }
+      printf("DEBUG: len: %zu, MAXLABEL: %d\n", len, MAXLABEL);
       if (len > MAXLABEL) {
+        printf("DEBUG: (len > MAXLABEL) == true\n");
         ares_free (buf);
         return ARES_EBADNAME;
       }
@@ -192,8 +197,10 @@ int ares_create_query(const char *name, int dnsclass, int type,
    * specified in RFC 1035 ("To simplify implementations, the total length of
    * a domain name (i.e., label octets and label length octets) is restricted
    * to 255 octets or less."). */
+  printf("DEBUG: buflen: %zu\n", buflen);
   if (buflen > (size_t)(MAXCDNAME + HFIXEDSZ + QFIXEDSZ +
                 (max_udp_size ? EDNSFIXEDSZ : 0))) {
+    printf("DEBUG: (buflen > (size_t)(MAXCDNAME + HFIXEDSZ + QFIXEDSZ +(max_udp_size ? EDNSFIXEDSZ : 0))) == true\n");
     ares_free (buf);
     return ARES_EBADNAME;
   }
