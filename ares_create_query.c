@@ -137,8 +137,10 @@ int ares_create_query(const char *name, int dnsclass, int type,
 
   /* Start writing out the name after the header. */
   q += HFIXEDSZ;
+  printf("DEBUG: name before while(): '%s'\n", name);
   while (*name)
     {
+      printf("DEBUG: name during while(): '%s'\n", name);
       if (*name == '.') {
         printf("DEBUG: (*name == '.') == true\n");
         ares_free (buf);
@@ -170,9 +172,12 @@ int ares_create_query(const char *name, int dnsclass, int type,
         }
 
       /* Go to the next label and repeat, unless we hit the end. */
-      if (!*p)
+      if (!*p) {
+        printf("DEBUG: END while()\n");
         break;
+      }
       name = p + 1;
+      printf("DEBUG: name at bottom of while(): '%s'\n", name);
     }
 
   /* Add the zero-length label at the end. */

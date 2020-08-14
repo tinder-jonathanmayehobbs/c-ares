@@ -63,6 +63,8 @@
 #  include "ares_platform.h"
 #endif
 
+#include <stdio.h>
+
 struct host_query
 {
   ares_channel channel;
@@ -761,5 +763,6 @@ static int as_is_first(const struct host_query* hquery)
           ndots++;
         }
     }
+  printf("DEBUG: ndots: %d, channel_ndots: %d\n", ndots, hquery->channel->ndots);
   return ndots >= hquery->channel->ndots;
 }

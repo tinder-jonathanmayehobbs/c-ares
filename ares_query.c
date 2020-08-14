@@ -32,6 +32,8 @@
 #include "ares_dns.h"
 #include "ares_private.h"
 
+#include <stdio.h>
+
 struct qquery {
   ares_callback callback;
   void *arg;
@@ -114,6 +116,8 @@ void ares_query(ares_channel channel, const char *name, int dnsclass,
   struct qquery *qquery;
   unsigned char *qbuf;
   int qlen, rd, status;
+
+  printf("DEBUG: channel_ndots: %d\n", channel->ndots);
 
   /* Compose the query. */
   rd = !(channel->flags & ARES_FLAG_NORECURSE);
