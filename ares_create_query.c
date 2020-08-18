@@ -141,7 +141,8 @@ int ares_create_query(const char *name, int dnsclass, int type,
   while (*name)
     {
       //printf("DEBUG: name during while(): '%s'\n", name);
-      if (*name == '.' && *(name + 1) != '.' ) {
+      //printf("DEBUG: *name: '%c', *(name + 1): '%c'\n", *name, *(name + 1));
+      if (*name == '.' ) {
         //printf("DEBUG: (*name == '.') == true\n");
 
         ares_free (buf);
@@ -177,8 +178,9 @@ int ares_create_query(const char *name, int dnsclass, int type,
         //printf("DEBUG: END while()\n");
         break;
       }
+      //printf("DEBUG: before name = p + 1: '%s'\n", name);
       name = p + 1;
-      //printf("DEBUG: name at bottom of while(): '%s'\n", name);
+      //printf("DEBUG: after name = p + 1: '%s'\n", name);
     }
 
   /* Add the zero-length label at the end. */

@@ -756,13 +756,21 @@ static int as_is_first(const struct host_query* hquery)
 {
   char* p;
   int ndots = 0;
+  char last_char;
+  //printf("DEBUG: hquery->name: '%s'\n", hquery->name);
   for (p = hquery->name; *p; p++)
     {
       if (*p == '.')
         {
           ndots++;
         }
+      last_char = *p;
     }
+
+  printf("DEBUG: last_char: '%c'\n", last_char);
+  if (last_char == '.') {
+    return true;
+  }
   //printf("DEBUG: ndots: %d, channel_ndots: %d\n", ndots, hquery->channel->ndots);
   return ndots >= hquery->channel->ndots;
 }
