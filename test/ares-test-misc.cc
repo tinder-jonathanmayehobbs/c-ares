@@ -254,7 +254,15 @@ TEST_F(LibraryTest, CreateQueryFailures) {
             ares_create_query("example..com", ns_c_in, ns_t_a, 0x1234, 0,
                     &p, &len, 0));
   if (p) ares_free_string(p);
+
+  // Empty non-terminal label
+  p = nullptr;
+  EXPECT_EQ(ARES_EBADNAME,
+            ares_create_query("dynamodb.us-east-1.amazonaws.com..accountdeviceservice.svc.cluster.local", ns_c_in, ns_t_a, 0x1234, 0,
+                    &p, &len, 0));
+  if (p) ares_free_string(p);
 }
+
 
 TEST_F(LibraryTest, CreateQueryOnionDomain) {
   byte* p;

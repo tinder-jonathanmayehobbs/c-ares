@@ -117,7 +117,7 @@ void ares_query(ares_channel channel, const char *name, int dnsclass,
   unsigned char *qbuf;
   int qlen, rd, status;
 
-  printf("DEBUG: channel_ndots: %d\n", channel->ndots);
+  //printf("DEBUG: channel_ndots: %d\n", channel->ndots);
 
   /* Compose the query. */
   rd = !(channel->flags & ARES_FLAG_NORECURSE);

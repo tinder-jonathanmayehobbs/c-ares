@@ -137,12 +137,13 @@ int ares_create_query(const char *name, int dnsclass, int type,
 
   /* Start writing out the name after the header. */
   q += HFIXEDSZ;
-  printf("DEBUG: name before while(): '%s'\n", name);
+  //printf("DEBUG: name before while(): '%s'\n", name);
   while (*name)
     {
-      printf("DEBUG: name during while(): '%s'\n", name);
-      if (*name == '.') {
-        printf("DEBUG: (*name == '.') == true\n");
+      //printf("DEBUG: name during while(): '%s'\n", name);
+      if (*name == '.' && *(name + 1) != '.' ) {
+        //printf("DEBUG: (*name == '.') == true\n");
+
         ares_free (buf);
         return ARES_EBADNAME;
       }
@@ -155,10 +156,10 @@ int ares_create_query(const char *name, int dnsclass, int type,
             p++;
           len++;
         }
-      printf("DEBUG: len: %zu, MAXLABEL: %d\n", len, MAXLABEL);
+      //printf("DEBUG: len: %zu, MAXLABEL: %d\n", len, MAXLABEL);
       if (len > MAXLABEL) {
-        printf("DEBUG: (len > MAXLABEL) == true\n");
-        ares_free (buf);
+        //printf("DEBUG: (len > MAXLABEL) == true\n");
+        //ares_free (buf);
         return ARES_EBADNAME;
       }
 
@@ -173,11 +174,11 @@ int ares_create_query(const char *name, int dnsclass, int type,
 
       /* Go to the next label and repeat, unless we hit the end. */
       if (!*p) {
-        printf("DEBUG: END while()\n");
+        //printf("DEBUG: END while()\n");
         break;
       }
       name = p + 1;
-      printf("DEBUG: name at bottom of while(): '%s'\n", name);
+      //printf("DEBUG: name at bottom of while(): '%s'\n", name);
     }
 
   /* Add the zero-length label at the end. */
@@ -202,10 +203,10 @@ int ares_create_query(const char *name, int dnsclass, int type,
    * specified in RFC 1035 ("To simplify implementations, the total length of
    * a domain name (i.e., label octets and label length octets) is restricted
    * to 255 octets or less."). */
-  printf("DEBUG: buflen: %zu\n", buflen);
+  //printf("DEBUG: buflen: %zu\n", buflen);
   if (buflen > (size_t)(MAXCDNAME + HFIXEDSZ + QFIXEDSZ +
                 (max_udp_size ? EDNSFIXEDSZ : 0))) {
-    printf("DEBUG: (buflen > (size_t)(MAXCDNAME + HFIXEDSZ + QFIXEDSZ +(max_udp_size ? EDNSFIXEDSZ : 0))) == true\n");
+    //printf("DEBUG: (buflen > (size_t)(MAXCDNAME + HFIXEDSZ + QFIXEDSZ +(max_udp_size ? EDNSFIXEDSZ : 0))) == true\n");
     ares_free (buf);
     return ARES_EBADNAME;
   }
