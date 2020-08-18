@@ -756,19 +756,35 @@ static int as_is_first(const struct host_query* hquery)
 {
   char* p;
   int ndots = 0;
-  char last_char;
+  //char last_char;
   //printf("DEBUG: hquery->name: '%s'\n", hquery->name);
+  //char* fqdn = ((char *)(&hquery->name + 1))[-1];
+  //size_t size = sizeof(&hquery->name ) / sizeof(&hquery->name[0]);
+  //printf("DEBUG: size1: '%zu'\n",sizeof(&hquery->name));
+  //printf("DEBUG: size2: '%zu'\n",sizeof(&hquery->name[0]));
+  //printf("DEBUG: size3: '%zu'\n",size);
+  char* last_char = &hquery->name[strlen(hquery->name)-1];
+  //printf("DEBUG: last_char: '%c'\n",*last_char);
   for (p = hquery->name; *p; p++)
     {
       if (*p == '.')
         {
           ndots++;
         }
-      last_char = *p;
+      //last_char = *p;
     }
 
-  printf("DEBUG: last_char: '%c'\n", last_char);
-  if (last_char == '.') {
+
+  //if (!(ndots >= hquery->channel->ndots)) {
+    //printf("DEBUG: we shouldnt return true\n");
+  //}
+  //if (last_char == '.') {
+    //printf("DEBUG: but we will\n");
+  //}
+  //printf("DEBUG: last_char: '%c'\n", last_char);
+
+  if (*last_char == '.') {
+    //printf("DEBUG: ndots: %d, channel_ndots: %d\n", ndots, hquery->channel->ndots);
     return true;
   }
   //printf("DEBUG: ndots: %d, channel_ndots: %d\n", ndots, hquery->channel->ndots);
